@@ -2,9 +2,16 @@ require 'active_record'
 require 'logger'
 require 'yaml'
 
+SEEDS_PATH = 'db/seeds'
+
 desc "Migrate the database through scripts in db/."
 task :migrate => :environment do
     ActiveRecord::Migrator.migrate('db/', ENV["VERSION"] ? ENV["VERSION"].to_i : nil )
+end
+
+desc "Rollback the database."
+task :rollback => :environment do
+    ActiveRecord::Migrator.rollback('db/', ENV["STEP"] ? ENV["STEP"].to_i : 1 )
 end
 
 task :environment do
