@@ -32,7 +32,7 @@ class POSApplication < Sinatra::Base
     get '/products' do
         begin
             products = Product.all || []
-            products.to_json
+            products.to_json.encode("GBK")
         rescue ActiveRecord::RecordNotFound => e
             [404, {:message => e.message}.to_json]
         end
